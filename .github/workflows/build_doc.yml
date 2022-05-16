@@ -11,5 +11,6 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
+          pre_compile: "make SVG2PDF"
           working_directory: doc/ug_openvario
           root_file: ug_ov.tex
