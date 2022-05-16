@@ -11,6 +11,6 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          pre_compile: "apt-get install librsvg2-bin && for i in figures/*.svg;do rsvg-convert -f pdf -o ${figures/i%.*}.pdf $i;done"
+          pre_compile: "apk add librsvg && for i in figures/*.svg;do rsvg-convert -f pdf -o ${figures/i%.*}.pdf $i;done"
           working_directory: doc/ug_openvario
           root_file: ug_ov.tex
