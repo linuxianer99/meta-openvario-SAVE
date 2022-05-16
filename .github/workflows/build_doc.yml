@@ -11,6 +11,6 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          pre_compile: "make SVG2PDF"
+          pre_compile: "SVGs := $(shell find $(IMG) -name '*.svg' | cut -d '.' -f 1) && SVG2PDF=$(foreach x,$(SVGs),$(x).pdf) && convert $(SVG2PDF)"
           working_directory: doc/ug_openvario
           root_file: ug_ov.tex
