@@ -14,4 +14,4 @@ IMAGE_INSTALL += "\
     ovmenu-ng \
 "
 
-export IMAGE_BASENAME = "openvario-image"
+export IMAGE_BASENAME = "ov"
