@@ -30,6 +30,21 @@ IMAGE_ROOTFS_ALIGNMENT = "2048"
 
 SDIMG_ROOTFS = "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 
+IMAGE_NAME[vardepsexclude] += "IMAGE_VERSION"
+
+python () {
+    import subprocess
+    import os.path
+
+    try:
+        parentRepo = os.path.dirname(d.getVar("COREBASE", True))
+        version = subprocess.check_output(["git", "describe", "--tags", "--dirty"], cwd = parentRepo, stderr = subprocess.DEVNULL).strip().decode('UTF-8')
+        d.setVar("IMAGE_VERSION", version)
+
+    except:
+        bb.warning("Could not get Git revision, image will have default name.")
+}
+
 do_image_openvario_sdimg[depends] += " \
 			parted-native:do_populate_sysroot \
 			mtools-native:do_populate_sysroot \
@@ -39,8 +54,8 @@ do_image_openvario_sdimg[depends] += " \
 			"
 
 # SD card image name
-SDIMG = "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.img"
-SDIMG_LINK = "${IMAGE_NAME_LINK}.rootfs.img"
+SDIMG = "${IMGDEPLOYDIR}/${IMAGE_NAME}.img"
+SDIMG_LINK = "${IMAGE_NAME_LINK}.img"
 
 IMAGE_CMD:openvario-sdimg () {
 
