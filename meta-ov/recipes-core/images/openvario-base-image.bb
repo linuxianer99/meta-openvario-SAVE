@@ -46,6 +46,7 @@ IMAGE_INSTALL = " \
     ts-uinput-service \
     ${COMMON_WIFI_FIRMWARE_PACKAGES} \
     ${LOCALE_PACKAGES} \
+    fix-cpu-freq\
 "
 
 #                    packagegroup-base packagegroup-core-ssh-openssh 
@@ -88,10 +89,10 @@ mask_systemd_units() {
 ROOTFS_POSTPROCESS_COMMAND += "mask_systemd_units;"
 
 delete_uimage() {
-	# delete the redundant uImage from the root partition; another
+	# delete the redundant kernel image from the root partition; another
 	# copy is on the /boot partition, and that one is used by
 	# u-boot
-	rm -f ${IMAGE_ROOTFS}/boot/uImage*
+	rm -f ${IMAGE_ROOTFS}/boot/*Image*
 }
 
 ROOTFS_POSTINSTALL_COMMAND += "delete_uimage;"

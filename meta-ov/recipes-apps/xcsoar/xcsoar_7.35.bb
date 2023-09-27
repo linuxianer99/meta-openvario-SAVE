@@ -7,6 +7,6 @@ RCONFLICTS:${PN}="xcsoar-testing"
 SRC_URI = "git://github.com/XCSoar/XCSoar.git;protocol=https;branch=master \
 "
 
-SRCREV = "6c33d2697576c6e408ddb9f553430050f91efb73"
+SRCREV = "6a85b412395b15ea22e0035ffc9af393fff1b33c"
 
 require xcsoar.inc

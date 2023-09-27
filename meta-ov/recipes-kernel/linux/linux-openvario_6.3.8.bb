@@ -5,14 +5,11 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 inherit kernel kernel-yocto siteinfo
 
-# Pull in the devicetree files into the rootfs
-RDEPENDS_${KERNEL_PACKAGE_NAME}-base += "kernel-devicetree"
-
 S = "${WORKDIR}/git"
 
-KBRANCH = "linux-5.17.y"
+KBRANCH = "linux-6.3.y"
 
-SRCREV = "2731bd17017d4a0e2180a1917ab22d7820a07330"
+SRCREV = "a70bf5cc6bd9c273b8f1dd849839eca57ae76df1"
 
 SRC_URI = " \
 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=${KBRANCH} \
@@ -39,9 +36,7 @@ SRC_URI = " \
 "
 
 SRC_URI:append:sunxi = " \
-	file://0001-pwm-sun4i-convert-next_period-to-local-variable.patch \
-	file://0002-pwm-sun4i-calculate-delay_jiffies-directly-eliminate.patch \
-	file://0003-pwm-sun4i-calculate-the-delay-without-rounding-down-.patch \
+	file://0004-Set-minimum-CPU-voltage-to-1.3V.patch\
 	\
 	file://openvario-common.dts \
 	file://openvario-43-rgb.dts \
@@ -56,9 +51,6 @@ SRC_URI:append:sunxi = " \
 	file://drm.cfg \
 "
 
-SRC_URI[md5sum] = "0751179f60de73eb2cd93f161fa52fcf"
-SRC_URI[sha256sum] = "3b84e13abae26af17ebccc4d7212f5843a991127a73a320848d5c6942ef781a2"
-
 KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
 KCONFIG_MODE ?= "alldefconfig"
 KMACHINE ?= "${MACHINE}"
@@ -69,10 +61,7 @@ KMACHINE ?= "${MACHINE}"
 KMETA = ".kernel-meta"
 
 do_configure:prepend:sunxi() {
-	if test -n "${KERNEL_DEVICETREE_SOURCE}"; then
-		cp ${WORKDIR}/openvario-common.dts ${S}/arch/arm/boot/dts/openvario-common.dts
-		cp ${WORKDIR}/${KERNEL_DEVICETREE_SOURCE} ${S}/arch/arm/boot/dts/openvario.dts
-	fi
+	cp ${WORKDIR}/openvario-*.dts ${S}/arch/arm/boot/dts/
 }
 
 FILES_${KERNEL_PACKAGE_NAME}-base:append = " ${nonarch_base_libdir}/modules/${KERNEL_VERSION}/modules.builtin.modinfo"
