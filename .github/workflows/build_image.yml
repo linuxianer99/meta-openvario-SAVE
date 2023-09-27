@@ -55,5 +55,6 @@ jobs:
         env:
           MACHINE: ${{ matrix.MACHINE }}
         run: |
+          who
           source openembedded-core/oe-init-build-env .
           bitbake openvario-image openvario-image-testing
