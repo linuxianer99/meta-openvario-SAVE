@@ -46,22 +46,16 @@ jobs:
           pwd
           ls
           git submodule update --init
-
-      - name: Startup container
-        run: docker run -d --name ovbuild --rm -v $(pwd):/workdir ghcr.io/openvario/ovbuild-container:main --workdir=/workdir
         
       - name: Debug Environment
         run: |
           id
           ls
-          docker exec ovbuild ls
-          docker exec ovbuild bash -c "ls && ls openembedded-core && source openembedded-core/oe-init-build-env . && bitbake openvario-image"
-          
-      #- name: Build images
-      #  env:
-      #    MACHINE: ${{ matrix.MACHINE }}
-      #  run: |
-      #    who
-      #    docker run -it --rm -v $(pwd):/workdir ghcr.io/openvario/ovbuild-container:main --workdir=/workdir bitbake
-      #    source openembedded-core/oe-init-build-env .
-      #    bitbake openvario-image openvario-image-testing
+          #docker ps -a
+          #docker exec ovbuild bash -c "ls && source openembedded-core/oe-init-build-env . && bitbake openvario-image"
+      
+      - name: Build images
+        env:
+          MACHINE: ${{ matrix.MACHINE }}
+        run: |
+          docker run -d --name ovbuild --rm -v $(pwd):/workdir ghcr.io/openvario/ovbuild-container:main --workdir=/workdir bash -c "source openembedded-core/oe-init-build-env . && bitbake openvario-image"
