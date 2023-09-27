@@ -39,10 +39,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 
       - name: Checkout sources
-        uses: actions/checkout@v2
-
+        uses: actions/checkout@v4.1.0
+        
       - name: Update submodules
-        run: git submodule update --init
+        run: |
+          pwd
+          ls
+          git submodule update --init
 
       - name: Startup container
         run: docker run -d --name ovbuild --rm -v $(pwd):/workdir ghcr.io/openvario/ovbuild-container:main --workdir=/workdir
