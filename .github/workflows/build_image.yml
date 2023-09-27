@@ -52,7 +52,7 @@ jobs:
           id
           ls
           docker exec ovbuild ls
-          docker exec ovbuild source openembedded-core/oe-init-build-env . && bitbake openvario-image
+          docker exec ovbuild bash -c "source openembedded-core/oe-init-build-env . && bitbake openvario-image"
           
       #- name: Build images
       #  env:
