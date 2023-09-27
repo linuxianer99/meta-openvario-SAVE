@@ -16,12 +16,15 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   Build_Images:
-
     name: Build images for release
 
     # The type of runner that the job will run on
     #runs-on: ubuntu-20.04
     runs-on: self-hosted
+    container:
+      image: ghcr.io/openvario/ovbuild-container:main
+      #volumes:
+      #  - $(pwd):/workdir:/workdir
 
 
     # Matrix Run: Test all combinations
@@ -42,11 +45,11 @@ jobs:
         run: git submodule update --init
 
       # Install necessary packages
-      - name: Install build dependencies
-        run: |
-          who
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool
+      #- name: Install build dependencies
+      #  run: |
+      #    who
+      #    sudo apt-get update
+      #    sudo apt-get install -y ffmpeg gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool
 
       - name: Build images
         env:
