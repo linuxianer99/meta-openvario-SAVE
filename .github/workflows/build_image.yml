@@ -58,4 +58,4 @@ jobs:
         env:
           MACHINE: ${{ matrix.MACHINE }}
         run: |
-          docker run -i --name ovbuild --rm -v $(pwd):/workdir ghcr.io/openvario/ovbuild-container:main --workdir=/workdir bash -c "source openembedded-core/oe-init-build-env . && bitbake openvario-image"
+          docker run -i --name ovbuild --rm -v $(pwd):/workdir -e "MACHINE=${{ matrix.MACHINE }}" ghcr.io/openvario/ovbuild-container:main --workdir=/workdir bash -c "source openembedded-core/oe-init-build-env . && bitbake openvario-image"
