@@ -63,10 +63,10 @@ jobs:
         run: |
           ls
           pwd
-          ls meta-openvario/tmp/deploy/images/${{ matrix.MACHINE }}
+          ls tmp/deploy/images/${{ matrix.MACHINE }}
           
       - name: Upload atrifacts
         uses: actions/upload-artifact@v3
         with:
           name: flashimage
-          path: meta-openvario/tmp/deploy/images/${{ matrix.MACHINE }}/*.rootfs.img.gz
+          path: tmp/deploy/images/${{ matrix.MACHINE }}/*.rootfs.img.gz
