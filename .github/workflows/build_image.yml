@@ -59,7 +59,12 @@ jobs:
           MACHINE: ${{ matrix.MACHINE }}
         run: |
           docker run -i --name ovbuild --rm -v $(pwd):/workdir -e "MACHINE=${{ matrix.MACHINE }}" ghcr.io/openvario/ovbuild-container:main --workdir=/workdir bash -c "source openembedded-core/oe-init-build-env . && bitbake openvario-image"
-
+      - name: Debug upload
+        run: |
+          ls
+          pwd
+          ls meta-openvario/tmp/deploy/images/${{ matrix.MACHINE }}
+          
       - name: Upload atrifacts
         uses: actions/upload-artifact@v3
         with:
